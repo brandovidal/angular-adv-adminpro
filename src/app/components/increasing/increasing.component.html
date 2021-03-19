@@ -1,0 +1,24 @@
+<div class="input-group">
+  <span class="input-group-btn">
+    <button [ngClass]="className" type="button" (click)="changeValue(-5)">
+      <i class="fa fa-minus"></i>
+    </button>
+  </span>
+  <input
+    type="tel"
+    class="form-control"
+    [ngClass]="{ 'is-invalid': progress > 100 || progress < 0 }"
+    placeholder="Progreso"
+    min="0"
+    max="100"
+    maxlength="3"
+    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+    (ngModelChange)="onChange($event)"
+    [(ngModel)]="progress"
+  />
+  <span class="input-group-btn">
+    <button [ngClass]="className" type="button" (click)="changeValue(5)">
+      <i class="fa fa-plus"></i>
+    </button>
+  </span>
+</div>
