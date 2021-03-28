@@ -9,8 +9,8 @@ import { NotPageFoundComponent } from './not-page-found/not-page-found.component
 import { AppRoutingModule } from './app-routing.module';
 
 // Modules
-import { PagesModule } from './pages/pages.module';
-import { AuthModule } from './auth/auth.module';
+import { PagesModule } from 'pages/pages.module';
+import { AuthModule } from 'auth/auth.module';
 @NgModule({
   declarations: [
     AppComponent,

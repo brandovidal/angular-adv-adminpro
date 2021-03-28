@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2'
 
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,8 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
   ) {
     this.registerForm = this.fb.group({
       name: ['Test', [Validators.required, Validators.minLength(2)]],
@@ -61,7 +63,7 @@ export class RegisterComponent {
     this.formSubmited = true
 
     if (this.registerForm.invalid) {
-      console.info('Formluario no es  correcto')
+      console.info('Formulario no es  correcto')
       return;
     }
 
@@ -69,9 +71,9 @@ export class RegisterComponent {
       .subscribe((res: any) => {
         console.info('res ', res)
         Swal.fire('Usuario registrado', `Usuario ${res.user.name} registrado`, 'info')
-
+        this.router.navigateByUrl('/')
       }, err => {
-        console.warn()
+        console.warn('err ', err.error?.msg)
         Swal.fire('Error', err.error.msg, 'error')
       })
   }

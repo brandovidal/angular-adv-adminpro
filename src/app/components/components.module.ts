@@ -7,7 +7,6 @@ import { ChartsModule } from 'ng2-charts';
 import { IncreasingComponent } from './increasing/increasing.component';
 import { DoughnutComponent } from './doughnut/doughnut.component';
 
-
 @NgModule({
   declarations: [
     IncreasingComponent,

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:3000'
+  baseUrl: 'http://localhost:3000',
+  googleId: '261289877643-25ssm14m7cl9am5ojei7bgk4f1s8k5tr.apps.googleusercontent.com'
 };
 
 /*

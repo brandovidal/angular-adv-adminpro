@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'
 
-import { AuthRoutingModule } from './auth/auth.routing.';
-import { PageRoutingModule } from './pages/page.routing'
+import { AuthRoutingModule } from 'auth/auth.routing.';
+import { PageRoutingModule } from 'pages/page.routing'
 
 import { NotPageFoundComponent } from './not-page-found/not-page-found.component';
 

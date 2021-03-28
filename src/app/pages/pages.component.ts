@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../services';
+
+import { SettingsService } from 'services';
 
 declare function customInitFunctions()
 
