@@ -5,9 +5,11 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import { environment } from 'env/environment';
-import { ILoginForm, IRegisterForm } from 'interfaces';
 import { Router } from '@angular/router';
+import { environment } from 'env/environment';
+
+import { ILoginForm, IRegisterForm } from 'interfaces';
+import { User } from 'models';
 
 declare const gapi: any
 const baseUrl = environment.baseUrl
@@ -17,6 +19,7 @@ const baseUrl = environment.baseUrl
 })
 export class UserService {
   auth2: any
+  public user: User
 
   constructor(
     private http: HttpClient,
@@ -26,11 +29,16 @@ export class UserService {
     this.googleInit()
   }
 
+  get token(): string {
+    return localStorage.getItem('token') || ''
+  }
+
+  get uid(): string {
+    return this.user.uid || ''
+  }
 
   googleInit() {
     return new Promise<void>(resolve => {
-      console.log('googleInit');
-
       gapi.load('auth2', () => {
         // Retrieve the singleton for the GoogleAuth library and set up the client.
         this.auth2 = gapi.auth2.init({
@@ -53,15 +61,18 @@ export class UserService {
   }
 
   validateToken(): Observable<boolean> {
-    const token = localStorage.getItem('token') || ''
     return this.http.get(`${baseUrl}/api/auth/renew`, {
       headers: {
-        'x-token': token
+        'x-token': this.token
       }
     }).pipe(
-      tap((res: any) => localStorage.setItem('token', res.token)),
-      map(res => true),
-      catchError(error => of(false))
+      map((res: any) => {
+        const { name, email, google, img = '', role, uid } = res.user
+        this.user = new User(name, email, '', google, img, role, uid)
+        localStorage.setItem('token', res.token)
+        return true
+      }),
+      catchError(() => of(false))
     )
   }
 
@@ -70,6 +81,18 @@ export class UserService {
       .pipe(
         tap((res: any) => localStorage.setItem('token', res.token))
       )
+  }
+
+  updateUser(data: { name: string, email: string, role: string }) {
+    data = {
+      ...data,
+      role: this.user.role
+    }
+    return this.http.put(`${baseUrl}/api/users/${this.uid}`, data, {
+      headers: {
+        'x-token': this.token
+      }
+    })
   }
 
   login(formData: ILoginForm) {

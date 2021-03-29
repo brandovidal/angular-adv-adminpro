@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Mi perfil del usuario</h4>
+        <h6 class="card-subtitle">Ajustes</h6>
+        <form
+          class="form p-t-20"
+          [formGroup]="profileForm"
+          (ngSubmit)="updateProfile()"
+        >
+          <div class="form-group">
+            <label for="exampleInputuname">User Name</label>
+            <div class="input-group">
+              <div class="input-group-addon"><i class="ti-user"></i></div>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputuname"
+                placeholder="Nombre del usuario"
+                formControlName="name"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <div class="input-group">
+              <div class="input-group-addon"><i class="ti-email"></i></div>
+              <input
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                placeholder="Ingresar email"
+                formControlName="email"
+                [readonly]="user.google"
+                [disabled]="user.google"
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-success waves-effect waves-light m-r-10"
+            [disabled]="profileForm.invalid"
+          >
+            <i class="fa fa-save"></i> Save info
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Avatar</h4>
+        <h6 class="card-subtitle">Imagen del usuario</h6>
+        <div class="img-container text-center mb-3">
+          <img
+            *ngIf="!imgTemporal; else imgTemplate"
+            [src]="user.imgUrl"
+            class="img-avatar"
+            alt="Update image user profile"
+            title="Escoge una imagen"
+            (click)="inputFile.click()"
+          />
+        </div>
+        <div class="file-container mb-3">
+          <input
+            #inputFile
+            type="file"
+            id="file"
+            name="file"
+            class="inputfile"
+            (change)="changeFile($event.target.files[0])"
+            [accept]="acceptImg"
+          />
+          <label for="file">
+            <!-- <img src="assets/svg/file-upload.svg" alt="">
+           -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="17"
+              viewBox="0 0 20 17"
+            >
+              <path
+                d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"
+              ></path>
+            </svg>
+            <span>Escoge una imagen</span>
+          </label>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-success waves-effect waves-light m-r-10"
+          [disabled]="!imgToUpload"
+          (click)="uploadPhoto()"
+        >
+          <i class="fa fa-save"></i> Update image
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #imgTemplate>
+  <img [src]="imgTemporal" class="img-avatar" alt="Update image user profile" />
+</ng-template>

@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.formSubmited = true
-    console.info('loginForm ', this.loginForm.value)
+    // console.info('loginForm ', this.loginForm.value)
 
     if (this.loginForm.invalid) {
       return;
@@ -86,18 +86,15 @@ export class LoginComponent implements OnInit {
       this.auth2 = gapi.auth2.init({
         client_id: environment.googleId,
         cookiepolicy: 'single_host_origin',
-        // Request scopes in addition to 'profile' and 'email'
-        //scope: 'additional_scope'
       });
       this.auth2 = this.userService.auth2
       this.attachSignin(document.getElementById('my-signin2'));
     });
   };
 
-  attachSignin(element) {
-    console.log(element.id);
+  attachSignin(element: any) {
     this.auth2.attachClickHandler(element, {},
-      (googleUser) => {
+      (googleUser: any) => {
         const { id_token: token } = googleUser.getAuthResponse()
 
         this.userService.loginGoogle(token)
@@ -107,7 +104,7 @@ export class LoginComponent implements OnInit {
             console.warn('err ', err.error?.msg)
             Swal.fire('Error', err.error.msg, 'error')
           })
-      }, (error) => {
+      }, (error: any) => {
         alert(JSON.stringify(error, undefined, 2));
       });
   }

@@ -9,6 +9,7 @@ import { Grafica1Component } from './grafica1/grafica1.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'progress', component: ProgressComponent, data: { title: 'Progress Bar' } },
       { path: 'grafica1', component: Grafica1Component, data: { title: 'Gráficas' } },
       { path: 'account-settings', component: AccountSettingsComponent, data: { title: 'Ajustes de Tema' } },
+      { path: 'profile', component: ProfileComponent, data: { title: 'Perfil' } },
       { path: 'promises', component: PromisesComponent, data: { title: 'Promesas' } },
       { path: 'rxjs', component: RxjsComponent, data: { title: 'Rxjs' } },
     ]
