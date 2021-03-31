@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'env/environment';
+import { TypeFilesName } from 'interfaces';
 
 const baseUrl = environment.baseUrl
 
@@ -14,7 +15,7 @@ export class FileUploadService {
     return localStorage.getItem('token') || ''
   }
 
-  async updatePhoto(file: File, type: 'hospitals' | 'users' | 'doctors', id: string) {
+  async updatePhoto(file: File, type: TypeFilesName, id: string) {
     try {
       const url = `${baseUrl}/api/upload/${type}/${id}`
       const formData = new FormData()

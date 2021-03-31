@@ -33,14 +33,17 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getUsers()
-
-    this.imgSubs = this.modalImageService.newImg
-      .pipe(delay(100))
-      .subscribe(() => this.getUsers())
+    this.uploadImg()
   }
 
   ngOnDestroy(): void {
     this.imgSubs.unsubscribe()
+  }
+
+  uploadImg() {
+    this.imgSubs = this.modalImageService.uploadImg
+      .pipe(delay(100))
+      .subscribe(() => this.getUsers())
   }
 
   getUsers() {
@@ -75,8 +78,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       .subscribe(console.log, console.warn)
   }
 
-  showModal(user: User) {
-    console.info('showModal ', user)
+  showImageModal(user: User) {
     this.modalImageService.showModal('users', user.uid, user.img)
   }
 
@@ -87,9 +89,9 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
 
     this.searchService.search('user', term)
-      .subscribe(res => {
-        console.info(res)
-        this.users = res
+      .subscribe((users: User[]) => {
+        // console.info(users)
+        this.users = users
       })
   }
 

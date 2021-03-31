@@ -1,3 +1,6 @@
+export * from './doctor.interface'
+export * from './hospital.interface'
 export * from './login-form.interface'
 export * from './register-form.interface'
 export * from './user.interface'
+export * from './util.interface'

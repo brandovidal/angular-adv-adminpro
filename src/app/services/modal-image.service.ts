@@ -12,7 +12,7 @@ export class ModalImagenService {
   public id: string
   public img: string = ''
 
-  public newImg: EventEmitter<string> = new EventEmitter<string>()
+  public uploadImg: EventEmitter<string> = new EventEmitter<string>()
 
   constructor() { }
 

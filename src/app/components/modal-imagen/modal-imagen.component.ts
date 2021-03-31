@@ -51,7 +51,7 @@ export class ModalImagenComponent implements OnInit {
     this.fileUploadService.updatePhoto(this.imgToUpload, type, id)
       .then(async (img) => {
         this.closeModal()
-        this.modalImageService.newImg.emit(img)
+        this.modalImageService.uploadImg.emit(img)
 
         if (id === this.userService.uid) {
           this.user.img = img

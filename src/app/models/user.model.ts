@@ -1,7 +1,8 @@
 import { environment } from "env/environment"
-import { IUser } from "interfaces"
+import { IUser, TypeFilesName } from "interfaces"
 
 const baseUrl = environment.baseUrl
+const type: TypeFilesName = 'users'
 
 export class User {
   public name: string
@@ -24,10 +25,10 @@ export class User {
 
   get imgUrl() {
     if (!this.img) {
-      return `${baseUrl}/api/upload/users/no-image`
+      return `${baseUrl}/api/upload/${type}/no-image`
     } else if (this.img.includes('https')) {
       return this.img
     }
-    return this.img ? `${baseUrl}/api/upload/users/${this.img}` : `${baseUrl}/api/upload/users/no-image`
+    return this.img ? `${baseUrl}/api/upload/${type}/${this.img}` : `${baseUrl}/api/upload/${type}/no-image`
   }
 }

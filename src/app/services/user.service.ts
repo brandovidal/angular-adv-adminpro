@@ -84,21 +84,6 @@ export class UserService {
     )
   }
 
-  createUser(formData: IRegisterForm) {
-    return this.http.post(`${baseUrl}/api/users`, formData)
-      .pipe(
-        tap((res: any) => localStorage.setItem('token', res.token))
-      )
-  }
-
-  updateUser(data: { name?: string, email?: string, role: string }) {
-    data = {
-      ...data,
-      role: this.user.role
-    }
-    return this.http.put(`${baseUrl}/api/users/${this.uid}`, data, this.headers)
-  }
-
   login(formData: ILoginForm) {
     return this.http.post(`${baseUrl}/api/auth`, formData)
       .pipe(
@@ -123,6 +108,21 @@ export class UserService {
       )
   }
 
+  createUser(formData: IRegisterForm) {
+    return this.http.post(`${baseUrl}/api/users`, formData)
+      .pipe(
+        tap((res: any) => localStorage.setItem('token', res.token))
+      )
+  }
+
+  updateUser(data: { name?: string, email?: string, role: string }) {
+    data = {
+      ...data,
+      role: this.user.role
+    }
+    return this.http.put(`${baseUrl}/api/users/${this.uid}`, data, this.headers)
+  }
+
   deleteUser(user: User) {
     console.log('deleteUser ', user)
     return this.http.delete(`${baseUrl}/api/users/${user.uid}`, this.headers)
@@ -131,5 +131,4 @@ export class UserService {
   editUser(data: User) {
     return this.http.put(`${baseUrl}/api/users/${data.uid}`, data, this.headers)
   }
-
 }
