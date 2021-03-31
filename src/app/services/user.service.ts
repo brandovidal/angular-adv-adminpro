@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'env/environment';
 
-import { ILoginForm, IRegisterForm } from 'interfaces';
+import { ILoginForm, IRegisterForm, ILoadUser } from 'interfaces';
 import { User } from 'models';
 
 declare const gapi: any
@@ -35,6 +35,14 @@ export class UserService {
 
   get uid(): string {
     return this.user.uid || ''
+  }
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    }
   }
 
   googleInit() {
@@ -68,7 +76,7 @@ export class UserService {
     }).pipe(
       map((res: any) => {
         const { name, email, google, img = '', role, uid } = res.user
-        this.user = new User(name, email, '', google, img, role, uid)
+        this.user = new User({ name, email, password: '', google, img, role, uid })
         localStorage.setItem('token', res.token)
         return true
       }),
@@ -83,16 +91,12 @@ export class UserService {
       )
   }
 
-  updateUser(data: { name: string, email: string, role: string }) {
+  updateUser(data: { name?: string, email?: string, role: string }) {
     data = {
       ...data,
       role: this.user.role
     }
-    return this.http.put(`${baseUrl}/api/users/${this.uid}`, data, {
-      headers: {
-        'x-token': this.token
-      }
-    })
+    return this.http.put(`${baseUrl}/api/users/${this.uid}`, data, this.headers)
   }
 
   login(formData: ILoginForm) {
@@ -108,4 +112,24 @@ export class UserService {
         tap((res: any) => localStorage.setItem('token', res.token))
       )
   }
+
+  getUsers(since = 0, size = 5): Observable<ILoadUser> {
+    return this.http.get<ILoadUser>(`${baseUrl}/api/users?since=${since}&size=${size}`, this.headers)
+      .pipe(
+        map(res => {
+          const users = res.users.map(user => new User({ ...user }))
+          return { users, total: res.total };
+        })
+      )
+  }
+
+  deleteUser(user: User) {
+    console.log('deleteUser ', user)
+    return this.http.delete(`${baseUrl}/api/users/${user.uid}`, this.headers)
+  }
+
+  editUser(data: User) {
+    return this.http.put(`${baseUrl}/api/users/${data.uid}`, data, this.headers)
+  }
+
 }

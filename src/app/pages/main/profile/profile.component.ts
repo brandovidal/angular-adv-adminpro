@@ -46,8 +46,9 @@ export class ProfileComponent implements OnInit {
         this.user.email = email
         await Swal.fire('Actualizar usuario', `Usuario <strong>${name}</strong> actualizado`, 'success')
       }, async (err) => {
-        console.warn(err.error.msg)
-        await Swal.fire('Actualizar usuario', `${err.error.msg}`, 'error')
+        const { error } = err
+        const { msg = '' } = error?.errors?.name || error?.errors?.email || error
+        await Swal.fire('Actualizar usuario', `${msg}`, 'error')
       })
   }
 

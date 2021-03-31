@@ -12,7 +12,7 @@ export class RxjsComponent implements OnDestroy {
   intervalSubs: Subscription
 
   constructor() {
-    // this.returnObservable()
+    // this.return Observable()
     //   .pipe(retry(2))
     //   .subscribe(
     //     value => console.log('Subs: ', value),
