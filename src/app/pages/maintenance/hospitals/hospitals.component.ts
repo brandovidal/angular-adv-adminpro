@@ -104,7 +104,7 @@ export class HospitalsComponent implements OnInit, OnDestroy {
       return this.hospitals = this.hospitalsTemp
     }
 
-    this.searchService.search('hospital', term)
+    this.searchService.searchByCollection('hospital', term)
       .subscribe((hospitals: Hospital[]) => {
         console.info(hospitals)
         this.hospitals = hospitals

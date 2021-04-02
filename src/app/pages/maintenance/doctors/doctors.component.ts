@@ -59,7 +59,7 @@ export class DoctorsComponent implements OnInit, OnDestroy {
       return this.doctors = this.doctorsTemp
     }
 
-    this.searchService.search('doctor', term)
+    this.searchService.searchByCollection('doctor', term)
       .subscribe((doctors: Doctor[]) => {
         console.info(doctors)
         this.doctors = doctors

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'env/environment';
+
 import { map } from 'rxjs/operators';
-import { Hospital, User } from 'models';
+import { environment } from 'env/environment';
+
+import { Doctor, Hospital, User } from 'models';
 import { TypeDB } from 'interfaces';
 
 const baseUrl = environment.baseUrl
@@ -36,11 +38,11 @@ export class SearchService {
     return data
   }
 
-  private tranformDoctor(data: any[]): any[] {
+  private tranformDoctor(data: any[]): Doctor[] {
     return data
   }
 
-  search(type: TypeDB, term: string, since = 0, size = 100) {
+  searchByCollection(type: TypeDB, term: string, since = 0, size = 100) {
     return this.http.get<any[]>(`${baseUrl}/api/search/collection/${type}/${term}?since=${since}&size=${size}`, this.headers)
       .pipe(
         map((res: any) => {
@@ -51,10 +53,17 @@ export class SearchService {
             case 'hospital':
               return this.tranformHospital(res.data)
 
+            case 'doctor':
+              return this.tranformDoctor(res.data)
+
             default:
               return [];
           }
         })
       )
+  }
+
+  search(term: string) {
+    return this.http.get<any[]>(`${baseUrl}/api/search/${term}`, this.headers)
   }
 }

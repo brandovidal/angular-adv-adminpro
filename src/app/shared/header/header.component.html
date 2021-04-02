@@ -76,11 +76,12 @@
             href="javascript:void(0)"
             ><i class="ti-search"></i
           ></a>
-          <form class="app-search">
+          <form class="app-search" (ngSubmit)="search(txtTerm.value)">
             <input
+              #txtTerm
               type="text"
               class="form-control"
-              placeholder="Search & enter"
+              placeholder="Buscar medico, hospital o usuario"
             />
             <a class="srh-btn"><i class="ti-close"></i></a>
           </form>
@@ -329,9 +330,12 @@
                   <div class="u-text">
                     <h4>{{ user.name }}</h4>
                     <p class="text-muted">
-                      {{ user.email | slice: 0:20 }}{{ user.email.length > 20 ? "..." : "" }}
+                      {{ user.email | slice: 0:20
+                      }}{{ user.email.length > 20 ? "..." : "" }}
                     </p>
-                    <a routerLink="./profile" class="btn btn-rounded btn-danger btn-sm"
+                    <a
+                      routerLink="./profile"
+                      class="btn btn-rounded btn-danger btn-sm"
                       >View Profile</a
                     >
                   </div>

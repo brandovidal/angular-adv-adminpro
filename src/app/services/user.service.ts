@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'env/environment';
 
-import { ILoginForm, IRegisterForm, ILoadUser } from 'interfaces';
+import { ILoginForm, IRegisterForm, ILoadUser, TypeRole } from 'interfaces';
 import { User } from 'models';
 
 declare const gapi: any
@@ -29,8 +29,13 @@ export class UserService {
     this.googleInit()
   }
 
+  // GETERS
   get token(): string {
     return localStorage.getItem('token') || ''
+  }
+
+  get role(): TypeRole {
+    return this.user.role || 'USER_ROLE'
   }
 
   get uid(): string {
@@ -45,6 +50,18 @@ export class UserService {
     }
   }
 
+  // LOCAL STORAGE
+  saveLocalStorage(token: string, menu: string) {
+    localStorage.setItem('token', token)
+    localStorage.setItem('menu', JSON.stringify(menu))
+  }
+
+  removeLocalStorage() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('menu')
+  }
+
+  // FUNCTIONS
   googleInit() {
     return new Promise<void>(resolve => {
       gapi.load('auth2', () => {
@@ -59,7 +76,7 @@ export class UserService {
   };
 
   logout() {
-    localStorage.removeItem('token')
+    this.removeLocalStorage()
 
     this.auth2.signOut().then(() => {
       this.ngZone.run(() => {
@@ -77,7 +94,7 @@ export class UserService {
       map((res: any) => {
         const { name, email, google, img = '', role, uid } = res.user
         this.user = new User({ name, email, password: '', google, img, role, uid })
-        localStorage.setItem('token', res.token)
+        this.saveLocalStorage(res.token, res.menu)
         return true
       }),
       catchError(() => of(false))
@@ -87,14 +104,14 @@ export class UserService {
   login(formData: ILoginForm) {
     return this.http.post(`${baseUrl}/api/auth`, formData)
       .pipe(
-        tap((res: any) => localStorage.setItem('token', res.token))
+        tap((res: any) => this.saveLocalStorage(res.token, res.menu))
       )
   }
 
   loginGoogle(token: string) {
     return this.http.post(`${baseUrl}/api/auth/google`, { token })
       .pipe(
-        tap((res: any) => localStorage.setItem('token', res.token))
+        tap((res: any) => this.saveLocalStorage(res.token, res.menu))
       )
   }
 
@@ -111,7 +128,7 @@ export class UserService {
   createUser(formData: IRegisterForm) {
     return this.http.post(`${baseUrl}/api/users`, formData)
       .pipe(
-        tap((res: any) => localStorage.setItem('token', res.token))
+        tap((res: any) => this.saveLocalStorage(res.token, res.menu))
       )
   }
 

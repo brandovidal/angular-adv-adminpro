@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
@@ -19,6 +20,7 @@ import { HeaderComponent } from './header/header.component';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule,
   ]
 })

@@ -1,5 +1,5 @@
 import { environment } from "env/environment"
-import { IUser, TypeFilesName } from "interfaces"
+import { IUser, TypeFilesName, TypeRole } from "interfaces"
 
 const baseUrl = environment.baseUrl
 const type: TypeFilesName = 'users'
@@ -10,7 +10,7 @@ export class User {
   public password?: string
   public google?: boolean
   public img?: string
-  public role?: string
+  public role?: TypeRole
   public uid?: string
 
   constructor(obj: IUser) {
@@ -19,7 +19,7 @@ export class User {
     this.password = (obj && obj.password) || ''
     this.google = (obj && obj.google) || false
     this.img = (obj && obj.img) || ''
-    this.role = (obj && obj.role) || ''
+    this.role = (obj && obj.role) || 'USER_ROLE'
     this.uid = (obj && obj.uid) || ''
   }
 

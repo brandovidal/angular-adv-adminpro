@@ -1,4 +1,5 @@
 import { User } from "models";
+import { TypeRole } from "./util.interface";
 
 export interface ILoadUser {
   total: number
@@ -11,6 +12,6 @@ export interface IUser {
   password?: string
   google?: boolean
   img?: string
-  role?: string
+  role?: TypeRole
   uid?: string
 }

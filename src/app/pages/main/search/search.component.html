@@ -1,0 +1,121 @@
+<div class="row animated fadeIn fast">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Usuarios</h3>
+
+        <div class="table-responsive" *ngIf="users.length > 0; else usersEmpty">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Nombre</th>
+              </tr>
+            </thead>
+            <tbody class="animated fadeIn fast" *ngFor="let user of users">
+              <tr>
+                <td>
+                  <img
+                    class="avatar"
+                    [src]="user.img | image: 'users'"
+                    alt=""
+                  />
+                </td>
+                <td>{{ user.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Medicos</h3>
+
+        <div
+          class="table-responsive"
+          *ngIf="doctors.length > 0; else doctorsEmpty"
+        >
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Nombre</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="animated fadeIn fast cursor-pointer"
+                *ngFor="let doctor of doctors"
+                (click)="showDoctor(doctor.uid)"
+              >
+                <td>
+                  <img
+                    class="avatar"
+                    [src]="doctor.img | image: 'doctors'"
+                    alt=""
+                  />
+                </td>
+                <td>{{ doctor.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Hospitales</h3>
+
+        <div
+          class="table-responsive"
+          *ngIf="hospitals.length > 0; else hospitalsEmpty"
+        >
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Nombre</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="animated fadeIn fast"
+                *ngFor="let hospital of hospitals"
+              >
+                <td>
+                  <img
+                    class="avatar"
+                    [src]="hospital.img | image: 'hospitals'"
+                    alt=""
+                  />
+                </td>
+                <td>{{ hospital.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #usersEmpty>
+  <article class="alert alert-info animated fadeIn fast">
+    <p class="mb-0">No hay usuarios con ese termino</p>
+  </article>
+</ng-template>
+<ng-template #doctorsEmpty>
+  <article class="alert alert-info animated fadeIn fast">
+    <p class="mb-0">No hay medicos con ese termino</p>
+  </article>
+</ng-template>
+<ng-template #hospitalsEmpty>
+  <article class="alert alert-info animated fadeIn fast">
+    <p class="mb-0">No hay hospitales con ese termino</p>
+  </article>
+</ng-template>
