@@ -1,3 +1,4 @@
+export * from './doctor.service'
 export * from './hospital.service'
 export * from './modal-image.service'
 export * from './search.service'

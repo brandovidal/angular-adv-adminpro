@@ -6,6 +6,7 @@ export class Doctor {
   public uid?: string
   public user?: IUser
   public hospital?: IHospital
+  public _id?: string
 
   constructor(obj: IDoctor) {
     this.name = (obj && obj.name) || ''
@@ -13,5 +14,6 @@ export class Doctor {
     this.uid = (obj && obj.uid) || ''
     this.user = (obj && obj.user) || null
     this.hospital = (obj && obj.hospital) || null
+    this._id = (obj && obj._id) || ''
   }
 }

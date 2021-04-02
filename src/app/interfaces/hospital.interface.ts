@@ -5,4 +5,5 @@ export interface IHospital {
   img?: string
   user?: IUser
   uid?: string
+  _id?: string
 }

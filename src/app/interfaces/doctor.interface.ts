@@ -7,4 +7,5 @@ export interface IDoctor {
   user?: IUser
   hospital?: IHospital
   uid?: string
+  _id?: string
 }
